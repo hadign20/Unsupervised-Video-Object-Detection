@@ -34,13 +34,13 @@ $$I^{(t)}(x_i+u_i, y_i+v_i)=I^{(t-1)}(x_i,y_i)$$
 where $(u_i,v_i)$ is the velocity vector of the center point of the $i$-th block located at $(x_i,y_i)$.
 Three-dimensional vectors $X_i$ can be constructed as:
 
-	$$ X_i^{(t-1)} = (x_i,y_i,1)^T, \quad X_i^{(t)} = (x_i+u_i,y_i+v_i,1)^T $$
+$$ X_i^{(t-1)} = (x_i,y_i,1)^T, \quad X_i^{(t)} = (x_i+u_i,y_i+v_i,1)^T $$
 
 and a reverse transformation matrix $H_{t:t-1}$ is obtained that satisfies the velocity equation for the largest possible number of samples:
 
-	$$ \left[X_1^{(t)}, X_2^{(t)}, ...\right] = \mathbf{H}_{t:t-1}\left[X_1^{(t-1)}, X_2^{(t-1)}, ...\right] $$
+$$ \left[X_1^{(t)}, X_2^{(t)}, ...\right] = \mathbf{H}_{t:t-1}\left[X_1^{(t-1)}, X_2^{(t-1)}, ...\right] $$
 
-which is solved by applying the by RANSAC algorithm \cite{fischler1981random} in order to remove outliers from the further calculations.
+which is solved by applying the by RANSAC algorithm in order to remove outliers from the further calculations.
 Also the center points of the blocks classified as foreground in the previous frame are excluded from this calculation as they do not contribute to the camera motion.
 
 ![image](https://user-images.githubusercontent.com/24352869/187810502-92863bac-4748-46a7-af4d-284ede5e255d.png)
@@ -61,18 +61,18 @@ Since the camera might have movements in the form of pan there can be slight var
 The Gaussian modeling keeps the information of previous frames and might be slow in catching up with the pace of changing values at the borders of the video frames.
 In order to make the model parameters adapt to these changes a global variation factor $g$ is calculated by subtracting the mean intensities in the background model and the current frame:
 
-$$	g^{(t)} = \frac{1}{N}\sum_{j=1}^{N}I_j^{(t)} - \frac{1}{B}\sum_{i=1}^{B}\tilde{\mu}_i^{(t-1)} $$
+$$ g^{(t)} = \frac{1}{N}\sum_{j=1}^{N}I_j^{(t)} - \frac{1}{B}\sum_{i=1}^{B}\tilde{\mu}_i^{(t-1)} $$
 
 with $B$ being the number of blocks and $N$ being the number of pixels.
 At each frame the parameters of the Gaussian mixture model for each block are updated as follows:
-$$
-	\begin{gathered}
+
+$$ \begin{gathered}
 		\mu_k^{(t)} = \left(n_k^{(t-1)}\left(\tilde{\mu}_k^{(t-1)} + g^{(t)}\right) + M^{(t)}\right) / (n_k^{(t-1)} + 1) \\
 		\sigma_k^{(t)} = \left(n_k^{(t-1)}\tilde{\sigma}_k^{(t-1)} + V^{(t-1)}\right) / (n_k^{(t-1)} + 1) \\
 		n_k^{(t)} = n_k^{(t-1)} + 1 \\
 		\alpha_k^{(t)} = n_k^{(t)} / \sum_{k=1}^{K}n_k^{(t)}
-	\end{gathered}
-$$
+	\end{gathered} $$
+	
 where $n_k$ is a counter representing the number of times an input value has been used to update component $k$, $\alpha_k$ is the weight of the $k$th component, $M$ and $V$ stand for the mean intensity and the variance of the block, respectively.
 The component with the largest weight of each Gaussian mixture model is considered to be the background value of the block.
 
@@ -88,7 +88,7 @@ This is because the foreground objects have multiple parts with different intens
 
 ![Untitled](https://user-images.githubusercontent.com/24352869/184511865-1b4452d4-639a-4338-8437-6b85e7689c35.png)
 
-In addition to the statistical modeling and inspired by the ViBe method \cite{barnich2010vibe}, we keep a set of sample values as a secondary non-parametric model for each block.
+In addition to the statistical modeling and inspired by the ViBe method, we keep a set of sample values as a secondary non-parametric model for each block.
 This set is initialized by the mean value of the block and its neighboring blocks at the first frame.
 At each of the consecutive frames one of the values in the set is selected randomly and replaced with the new mean value.
 We can denote the collection of background sample values for the block $i$ as $\mathcal{S}_i$ as follows:
@@ -102,7 +102,7 @@ If an input value does not fit into any of the Gaussian components of a backgrou
 If the number of samples in the set of block $i$ that are closer than a distance threshold to the input value is less than a counting threshold, the foreground model is updated by that value.
 Representing this number of samples by $C_i$ it can be calculated as follows:
 
-$$ C_i = \sum_{j = 1}^{|\mathcal{S}_i|}\mathds{1}\left(D(\mathbf{x},\tilde{s}_j^{(s)}) < \theta_d\right) $$
+$$ C_i = \sum_{j = 1}^{|\mathcal{S}_i|}1\left(D(\mathbf{x},\tilde{s}_j^{(s)}) < \theta_d\right) $$
 
 with $\mathbf{x}$ being the input pixel intensity value, $D$ representing the Euclidean distance, $\theta_d$ being a predefined threshold, which is set to $20$, $\mathds{1}$ denoting an indicator function, $\tilde{s}_j^{(s)}$ representing the corresponding value of $s_i^{(k)}$ after motion compensation, and $\mathcal{S}_i$ denoting the set of neighboring blocks.
 We calculate the Euclidean distances between the new values and the samples in the set and only classify the new values as foreground if they match with less than a few samples in the set.
@@ -111,37 +111,38 @@ The foreground model is only updated with values that belong to the foreground c
 
 ### Background and foreground classification
 For the final classification, at first the foreground likelihood values are calculated for each pixel at an input image as follows:
+
 $$ L_{fg}(x,y) = \frac{\left(I(x,y) - \mu_k\right)^2}{\sigma_k} $$
+
 where $I(x,y)$ and $L_{fg}(x,y)$ are the intensity and foreground likelihood values of the pixel at location $(x,y)$, and $\mu_k$ and $\sigma_k$ are the mean and variance of the corresponding background block, respectively.
 Afterwards, the watershed segmentation algorithm is applied to each input image in order to extract a set of super-pixels, notated by $\mathbb{P} = \{P_1,P_2,...,P_k\}$.
 
 For final classification the mean value of each super-pixel is compared against the major component in the background model of the corresponding block as well as each component in the foreground model.
 The foreground confidence map $\mathcal{F}$ is obtained by calculating the mean of confidence values in each super-pixel as follows:
+
 $$ \mathcal{F}(P_i) = \frac{1}{|P_i|}\sum_{x,y \in P_i}L_{fg}\left(x,y\right) $$
+
 where $|P_i|$ is the number of pixels at super-pixel $P_i$.
 Assuming there are $M$ major components in the global foreground model, a background confidence map $\mathcal{B}_m, m\in\{1,...,M\}$ is similarly obtained based on each component.
 The Gaussian Naive Bayes (GNB) classifier is applied for each super-pixel in order to calculate the z-score distance between the input value and each class-mean and classify the super-pixel accordingly in order to obtain the final foreground mask $\mathcal{H}$:
-$$
-	\mathcal{H}(P_i) = \begin{cases}
-		1, \text{if } \mathcal{F}(P_i) > \mathcal{B}_m(P_i)\\
-		0, \text{otherwise} 
-	\end{cases}
-$$
-where $\mathcal{B}_m$ is the background confidence map corresponding to the $m$-th foreground model and $\mathcal{H}(P_i)=1$ indicates that the super-pixel at location $P_i$ belongs to the moving objects and $\mathcal{H}(P_i)=0$ means it belongs to the background.
-The process of segmenting the foreground is detailed in \Cref{alg}.
 
-The different stages in the classification process can be seen in \Cref{fig_cls} .
-From top to bottom, each row in the figure represents a sample video frame from the DAVIS \cite{pont20172017}, Segment Pool Tracking \cite{FliICCV2013}, and SCBU \cite{yun2017scene} datasets, respectively.
+$$ \mathcal{H}(P_i) = 1, \text{if } \mathcal{F}(P_i) > \mathcal{B}_m(P_i) \quad and \quad 0, \quad \text{otherwise}  $$
+
+where $\mathcal{B}_m$ is the background confidence map corresponding to the $m$-th foreground model and $\mathcal{H}(P_i)=1$ indicates that the super-pixel at location $P_i$ belongs to the moving objects and $\mathcal{H}(P_i)=0$ means it belongs to the background.
+The process of segmenting the foreground is detailed in the algorithm.
+
+The different stages in the classification process can be seen in the figure .
+From top to bottom, each row in the figure represents a sample video frame from the DAVIS, Segment Pool Tracking, and SCBU datasets, respectively.
 The second column represents heatmaps where the pixels with a higher probability of belonging to the foreground are represented by red colors.
 The third column is the results of the watershed segmentation algorithm applied to each video frame with the markers chosen uniformly across the image at the same locations as the background block centers.
-The fourth column illustrates the foreground confidence maps calculated based on \cref{eq:conf} and the last column is the final results of foreground detection after morphological dilation.
+The fourth column illustrates the foreground confidence maps calculated based on the equation and the last column is the final results of foreground detection after morphological dilation.
 
-![image](https://user-images.githubusercontent.com/24352869/187811395-6179984b-fb6a-45a6-b0f7-eb07eec4335c.png | width=100)
+![image](https://user-images.githubusercontent.com/24352869/187811395-6179984b-fb6a-45a6-b0f7-eb07eec4335c.png)
 
 ![image](https://user-images.githubusercontent.com/24352869/187811482-1266882b-0bb8-42ec-86b6-892195a952e2.png)
 
 ### Experiments
-The performance of the proposed method is evaluated using video data collected from the publicly available SCBU dataset \cite{yun2017scene} that consists of nine video sequences captured by moving cameras.
+The performance of the proposed method is evaluated using video data collected from the publicly available SCBU dataset that consists of nine video sequences captured by moving cameras.
 The videos in the dataset impose various challenges in the way of foreground segmentation, such as fast or slow moving objects, objects with different sizes, illumination changes, and the similarities in intensity values between the background and foreground.
 In terms of time and space complexity, the statistical methods are more efficient as the methods based on deep neural networks require more resources.
 Therefore, our method is more practical in applications with real-time requirements and edge devices that have a lower hardware capacity.
@@ -152,13 +153,11 @@ Also, the camouflage problem, where the foreground color values are very similar
 This problem can be solved by introducing more discriminating features to the statistical modeling process in future studies.
 The f-score metric is used in order to evaluate the quantitative results:
 
-$$
-	\begin{cases}
-		PRE=T_P/(T_P+F_P)\\
-		REC=T_P/(T_P+F_N)\\
-		F_1= 2 \times (PRE \times REC)/(PRE+REC)
-	\end{cases}
-$$
+$$\begin{gathered} 
+PRE=T_P/(T_P+F_P)  \quad
+ REC=T_P/(T_P+F_N) \quad
+F_1= 2 \times (PRE \times REC)/(PRE+REC) 
+\end{gathered}$$
 
 where $T_P$, $F_P$ are the number of pixels correctly and incorrectly reported as foreground, and $T_N$ and $F_N$ are the number of pixels that are correctly and incorrectly reported as background, respectively.
 $PRE$, $REC$, and $F_1$ refer to precision, recall, and F1-score, respectively.
