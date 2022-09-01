@@ -104,7 +104,7 @@ Representing this number of samples by $C_i$ it can be calculated as follows:
 
 $$ C_i = \sum_{j = 1}^{|\mathcal{S}_i|}1\left(D(\mathbf{x},\tilde{s}_j^{(s)}) < \theta_d\right) $$
 
-with $\mathbf{x}$ being the input pixel intensity value, $D$ representing the Euclidean distance, $\theta_d$ being a predefined threshold, which is set to $20$, $\mathds{1}$ denoting an indicator function, $\tilde{s}_j^{(s)}$ representing the corresponding value of $s_i^{(k)}$ after motion compensation, and $\mathcal{S}_i$ denoting the set of neighboring blocks.
+with $\mathbf{x}$ being the input pixel intensity value, $D$ representing the Euclidean distance, $\theta_d$ being a predefined threshold, which is set to $20$, $1$ denoting an indicator function, $\tilde{s}_j^{(s)}$ representing the corresponding value of $s_i^{(k)}$ after motion compensation, and $\mathcal{S}_i$ denoting the set of neighboring blocks.
 We calculate the Euclidean distances between the new values and the samples in the set and only classify the new values as foreground if they match with less than a few samples in the set.
 The foreground model is only updated with values that belong to the foreground class with a high certainty and therefore, the majority of false positive cases are avoided.
 
