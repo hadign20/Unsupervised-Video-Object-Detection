@@ -1,24 +1,7 @@
-# Moving-Camera-Foreground-Detection
+# Unsupervised Video Object Detection
 Foreground detection in videos captured by moving cameras
 
 Source code of paper: **"Real-Time Hysteresis Foreground Detection in Video Captured by Moving Cameras", the 2022 IEEE International Conference on Imaging Systems and Techniques, IST 2022, June 21-23, 2022 ([link](https://ieeexplore.ieee.org/document/9827719))**
-
-
-
-https://user-images.githubusercontent.com/24352869/187813915-3719413c-fbb2-4c3e-a23f-d1801969e8b4.mp4
-
-https://user-images.githubusercontent.com/24352869/187813956-de0a87ae-e4dc-4b20-9f7e-cf26dcab5609.mp4
-
-https://user-images.githubusercontent.com/24352869/187813979-660a07d2-5a41-4eb0-a52b-e69c2d8f9591.mp4
-
-https://user-images.githubusercontent.com/24352869/187814447-d2466e14-1edc-41be-a543-e0df56e9749b.mp4
-
-https://user-images.githubusercontent.com/24352869/187814452-adb6a021-c38a-4a45-ac00-f2e665383f1d.mp4
-
-https://user-images.githubusercontent.com/24352869/187814439-cd0310c6-e15b-4554-a6c1-340596c5f47c.mp4
-
-
-
 
 
 ### Introduction
@@ -214,3 +197,17 @@ Experimental results demonstrate the feasibility of the proposed method in real-
   organization={IEEE}
 }
 ```
+
+
+https://user-images.githubusercontent.com/24352869/187813915-3719413c-fbb2-4c3e-a23f-d1801969e8b4.mp4
+
+https://user-images.githubusercontent.com/24352869/187813956-de0a87ae-e4dc-4b20-9f7e-cf26dcab5609.mp4
+
+https://user-images.githubusercontent.com/24352869/187813979-660a07d2-5a41-4eb0-a52b-e69c2d8f9591.mp4
+
+https://user-images.githubusercontent.com/24352869/187814447-d2466e14-1edc-41be-a543-e0df56e9749b.mp4
+
+https://user-images.githubusercontent.com/24352869/187814452-adb6a021-c38a-4a45-ac00-f2e665383f1d.mp4
+
+https://user-images.githubusercontent.com/24352869/187814439-cd0310c6-e15b-4554-a6c1-340596c5f47c.mp4
+
