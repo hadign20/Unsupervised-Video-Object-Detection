@@ -3,13 +3,12 @@ Foreground detection in videos captured by moving cameras
 
 Source code of paper: **"Real-Time Hysteresis Foreground Detection in Video Captured by Moving Cameras", the 2022 IEEE International Conference on Imaging Systems and Techniques, IST 2022, June 21-23, 2022 ([link](https://ieeexplore.ieee.org/document/9827719))**
 
-
-### How to run
 * The program is tested on Windows 10 with OpenCV 3.4.1 in Release x64 mode. It should work with any version of OpenCV 3.
 * The .exe file needs one argument which is the path to the video file
 * The program is tested with the [DAVIS](https://davischallenge.org/) and [SCBU](https://github.com/CansenJIANG/SCBU) datasets
 * The SCBU data can also be found [here](https://drive.google.com/drive/folders/1VrHf9jc48bX4FmDwsdt32SRfVWkyWb9A?usp=sharing)
 
+### How to run
 1. setup Visual Studio with OpenCV ([guide](https://learnopencv.com/code-opencv-in-visual-studio/))
 2. add a folder called "results" next to main.cpp in the project directory
 3. set the desired parameters in config.xml and also in DCFG.h
