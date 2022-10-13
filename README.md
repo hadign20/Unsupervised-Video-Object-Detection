@@ -5,8 +5,9 @@ Source code of paper: **"Real-Time Hysteresis Foreground Detection in Video Capt
 
 
 ### How to run
-The program is tested on Windows 10 with OpenCV 3.4.1 in Release x64 mode. It should work with any version of OpenCV 3.
-The .exe file needs one argument which is the path to the video file
+* The program is tested on Windows 10 with OpenCV 3.4.1 in Release x64 mode. It should work with any version of OpenCV 3.
+* The .exe file needs one argument which is the path to the video file
+* The program is tested with the [DAVIS](https://davischallenge.org/) and [SCBU](https://github.com/CansenJIANG/SCBU) datasets
 
 1. setup Visual Studio with OpenCV ([guide](https://learnopencv.com/code-opencv-in-visual-studio/))
 2. add a folder called "results" next to main.cpp in the project directory
